@@ -9,7 +9,7 @@
 #  define MAX_Y 800
 # endif
 # ifndef MAX_ITER
-#  define MAX_ITER 30
+#  define MAX_ITER 100
 # endif
 # include <fcntl.h>
 # include <unistd.h>
@@ -53,5 +53,6 @@ int iterator(t_fract *fract);
 int colorize(int iter);
 void render_man(t_fract *fractal);
 int render_jul(t_fract *fractal);
+int fast_check(t_fract *fract);
 
 #endif

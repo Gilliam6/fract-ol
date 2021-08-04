@@ -20,16 +20,16 @@ int	zoom(int button, int x, int y,t_fract *fractal)
 
 	if (button == 4)
 	{
-		fractal->zoom += 10;
-		fractal->C.im += 0.01;
-		fractal->C.re -= 0.01;
+		fractal->zoom += 50;
+//		fractal->C.im += 0.01;
+//		fractal->C.re -= 0.01;
 		render_jul(fractal);
 	}
 	if (button == 5)
 	{
-		fractal->zoom -= 10;
-		fractal->C.im += 0.01;
-		fractal->C.re -= 0.01;
+		fractal->zoom -= 50;
+//		fractal->C.im += 0.01;
+//		fractal->C.re -= 0.01;
 		render_jul(fractal);
 	}
 //	mlx_loop_hook(fractal->mlx, render_jul, fractal);
@@ -73,29 +73,24 @@ int render_jul(t_fract *fractal)
 {
 	double x = MAX_X / 2;
 	double y = MAX_Y / 2;
-//	double scale = x / 2;
+
 	fractal->x = -x;
 	fractal->y = -y;
-//	fractal->R = 250;
-//	fractal->C.re = fractal->x / scale;
-//	fractal->C.im = -fractal->y / scale;
-//	fractal->C.re = -0.85;
-//	fractal->C.im = 0.156;
-	while(fractal->x < x - 1|| fractal->y < y - 1)
+	while(fractal->y < y - 1)
 	{
-		if (fractal->x == x - 1)
+		fractal->x = -x;
+		while(fractal->x < x - 1)
 		{
-			fractal->x = -x;
-			fractal->y++;
+			fractal->Z.re = fractal->x / fractal->zoom;
+			fractal->Z.im = fractal->y / fractal->zoom;
+			if (!fast_check(fractal))
+				fractal->iter = iterator(fractal);
+			fractal->color = colorize(fractal->iter);
+			my_mlx_pixel_put(fractal, fractal->x + x, fractal->y + y,
+							 fractal->color);
+			fractal->x++;
 		}
-		fractal->Z.re = fractal->x / fractal->zoom;
-		fractal->Z.im = fractal->y / fractal->zoom;
-		fractal->iter = iterator(fractal);
-		fractal->color = colorize(fractal->iter);
-		my_mlx_pixel_put(fractal, fractal->x + x, fractal->y + y,
-						 fractal
-				->color);
-		fractal->x++;
+		fractal->y++;
 	}
 	mlx_put_image_to_window(fractal->mlx, fractal->win, fractal->img.img, 0, 0);
 	return (1);
@@ -106,7 +101,8 @@ int main()
 	t_fract fractal;
 
 	fractal.C.re = -0.8;
-	fractal.C.im = 0.134;
+	fractal.C.im = 0.156;
+	fractal.zoom = MAX_X / 4;
 
 	fractal.mlx = mlx_init();
 	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, "fractol\'");
@@ -114,9 +110,7 @@ int main()
 	fractal.img.img = mlx_new_image(fractal.mlx, MAX_X, MAX_Y);
 	fractal.img.addr = mlx_get_data_addr(fractal.img.img, &fractal
 	.img.bits_per_pixel, &fractal.img.line_length, &fractal.img.endian);
-	fractal.zoom = MAX_X / 4;
 	render_jul(&fractal);
-//	mlx_put_image_to_window(fractal.mlx, fractal.win, fractal.img.img, 0, 0);
 
 	mlx_hook(fractal.win, 2, 1l<<0, close_win, &fractal);
 	mlx_mouse_hook(fractal.win, zoom, &fractal);

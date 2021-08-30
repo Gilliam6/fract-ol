@@ -13,7 +13,7 @@ RM = rm -f
 ${NAME}: ${INCLUDE}
 		make -C libft
 		gcc ${CFLAGS} libft/libft.a -I /usr/local/include ${SRCS} ${MLX} -o ${NAME}
-		./${NAME}
+
 
 all:	${NAME}
 

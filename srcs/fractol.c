@@ -10,7 +10,7 @@ int	my_exit(int err_num)
 
 int	name_check(char *f_name)
 {
-	char	fractals[2][15] = {"Mandelbroth", "Julia"};
+	char	fractals[2][15] = {"Mandelbrot", "Julia"};
 	int		set;
 	int		index;
 
@@ -21,16 +21,27 @@ int	name_check(char *f_name)
 		while (f_name[index] && fractals[set][index] == f_name[index])
 			index++;
 		if (!f_name[index] && !fractals[set][index])
-			return (0);
+			return (set);
 		set++;
 	}
-	return (1);
+	return (-1);
 }
 
+void	data_flow(t_fract *fractal, char *set)
+{
+	fractal->zoom = 1;
+
+	if (name_check(set) == 0)
+	{
+		mandelbrot(fractal);
+	}
+//	if (set == jul)
+//		julia(fractal);
+}
 void	fractal(char *set)
 {
 	t_fract fractal;
-	(void) set;
+
 	// mlx and window init
 	fractal.mlx = mlx_init();
 	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, "fractol\'");
@@ -40,6 +51,10 @@ void	fractal(char *set)
 	fractal.img.addr = mlx_get_data_addr(fractal.img.img, &fractal
 			.img.bits_per_pixel, &fractal.img.line_length, &fractal.img.endian);
 
+	// Fractal branches
+	data_flow(&fractal, set);
+	mlx_put_image_to_window(fractal.mlx, fractal.win, fractal.img.img, 0, 0);
+
 	// base hooks
 	mlx_hook(fractal.win, 2, 1l<<0, close_win, &fractal);
 	mlx_loop(fractal.mlx);
@@ -47,7 +62,7 @@ void	fractal(char *set)
 
 int main(int argc, char **argv)
 {
-	if (argc != 2 || name_check(argv[1]))
+	if (argc != 2 || (name_check(argv[1]) == -1))
 		return (my_exit(-1));
 
 	fractal(argv[1]);

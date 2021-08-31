@@ -27,24 +27,22 @@ int	name_check(char *f_name)
 	return (-1);
 }
 
-void	data_flow(t_fract *fractal, char *set)
+void	data_flow(t_fract *fractal)
 {
-	fractal->zoom = 1;
-
-	if (name_check(set) == 0)
-	{
+	if (name_check(fractal->set) == 0)
 		mandelbrot(fractal);
-	}
-//	if (set == jul)
-//		julia(fractal);
+	if (name_check(fractal->set) == 1)
+		julia(fractal);
 }
 void	fractal(char *set)
 {
 	t_fract fractal;
 
+	fractal.set = set;
+	fractal.zoom = 1;
 	// mlx and window init
 	fractal.mlx = mlx_init();
-	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, "fractol\'");
+	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, set);
 
 	// mlx image init
 	fractal.img.img = mlx_new_image(fractal.mlx, MAX_X, MAX_Y);
@@ -52,11 +50,12 @@ void	fractal(char *set)
 			.img.bits_per_pixel, &fractal.img.line_length, &fractal.img.endian);
 
 	// Fractal branches
-	data_flow(&fractal, set);
-	mlx_put_image_to_window(fractal.mlx, fractal.win, fractal.img.img, 0, 0);
+	data_flow(&fractal);
 
 	// base hooks
 	mlx_hook(fractal.win, 2, 1l<<0, close_win, &fractal);
+	mlx_mouse_hook(fractal.win, zoom, &fractal);
+
 	mlx_loop(fractal.mlx);
 }
 

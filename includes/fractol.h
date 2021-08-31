@@ -41,16 +41,17 @@ typedef struct fract_list
 	t_complex		C;
 	t_complex 		Z;
 	img_data		img;
-	double			Xstep;
-	double			Ystep;
 	double			R;
 	double			zoom;
 	int				iter;
 	int				color;
+	char			*set;
 } t_fract;
+void	data_flow(t_fract *fractal);
 int close_win(int key, t_fract *fractal);
 //void julia(t_fract fractal);
 void mandelbrot(t_fract *fractal);
+void julia(t_fract *fractal);
 t_complex	init_complex(double re, double im);
 double	magnitude(t_complex complex);
 t_complex	add(t_complex z, t_complex c);
@@ -59,5 +60,8 @@ void my_mlx_pixel_put(t_fract *fract, int x, int y, int color);
 int	create_trgb(int t, int r, int g, int b);
 int colorize(int iter);
 t_complex	init_complex(double re, double im);
+int fast_check(t_fract *fract);
+double radius(t_complex complex);
+int	zoom(int button, int x, int y,t_fract *fractal);
 
 #endif

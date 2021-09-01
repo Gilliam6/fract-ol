@@ -18,18 +18,24 @@ void julia(t_fract *fractal)
 		y = -MAX_Y / 2;
 		while(y < MAX_Y / 2)
 		{
-			fractal->x = x / X_step;
-			fractal->y = y / Y_step;
+			fractal->x = (x + fractal->x_move) / X_step;
+			fractal->y = (y + fractal->y_move) / Y_step;
 //			fractal->C = init_complex(fractal->x, fractal->y);
 			fractal->Z = init_complex(fractal->x, fractal->y);
 			iter = 0;
-			while (iter < MAX_ITER && magnitude(fractal->Z) < 4.0)
+			if (fast_check(fractal))
+				fractal->color = 0;
+			else
 			{
-				fractal->Z = square(fractal->Z);
-				fractal->Z = add(fractal->Z, fractal->C);
-				iter++;
+				iter = 0;
+				while (iter < MAX_ITER && magnitude(fractal->Z) < 4.0)
+				{
+					fractal->Z = square(fractal->Z);
+					fractal->Z = add(fractal->Z, fractal->C);
+					iter++;
+				}
+				fractal->color = colorize(iter);
 			}
-//			ft_putnbr_fd(magnitude(fractal->Z) < 4.0,1);
 			fractal->color = colorize(iter);
 			my_mlx_pixel_put(fractal, x + MAX_X / 2, y + MAX_Y / 2,
 							 fractal->color);

@@ -5,17 +5,25 @@ void mandelbrot(t_fract *fractal)
 	int x;
 	int y;
 	int iter;
+	double X_step;
+	double Y_step;
+	int P_x;
+	int P_y;
 
+	P_x = MAX_X / 2;
+	P_y = MAX_Y / 2;
+	X_step = (double)P_x / 2.0 / fractal->zoom;
+	Y_step = (double)P_y / 2.0 / fractal->zoom;
 	x = 0;
 	while(x < MAX_X)
 	{
 		y = 0;
 		while(y < MAX_Y)
 		{
-			fractal->x = ((double)(x - MAX_X / 2) / (double)(MAX_X / 4)) /
-					fractal->zoom;
-			fractal->y = ((double)(y - MAX_Y / 2) / (double)(MAX_Y / 4)) /
-					fractal->zoom;
+			fractal->x = ((double)((x + fractal->x_move) - P_x) / (double)
+					(X_step));
+			fractal->y = ((double)((y + fractal->y_move) - P_y) / (double)
+					(Y_step));
 			fractal->C = init_complex(fractal->x, fractal->y);
 			fractal->Z = init_complex(0, 0);
 			if (fast_check(fractal))

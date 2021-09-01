@@ -40,6 +40,8 @@ void	fractal(char *set)
 
 	fractal.set = set;
 	fractal.zoom = 1;
+	fractal.x_move = 0;
+	fractal.y_move = 0;
 	// mlx and window init
 	fractal.mlx = mlx_init();
 	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, set);
@@ -55,7 +57,7 @@ void	fractal(char *set)
 	// base hooks
 	mlx_hook(fractal.win, 2, 1l<<0, close_win, &fractal);
 	mlx_mouse_hook(fractal.win, zoom, &fractal);
-
+	mlx_key_hook(fractal.win, arrows, &fractal);
 	mlx_loop(fractal.mlx);
 }
 

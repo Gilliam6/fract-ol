@@ -46,6 +46,8 @@ typedef struct fract_list
 	int				iter;
 	int				color;
 	char			*set;
+	int				x_move;
+	int 			y_move;
 } t_fract;
 void	data_flow(t_fract *fractal);
 int close_win(int key, t_fract *fractal);
@@ -63,5 +65,6 @@ t_complex	init_complex(double re, double im);
 int fast_check(t_fract *fract);
 double radius(t_complex complex);
 int	zoom(int button, int x, int y,t_fract *fractal);
+int arrows(int button, t_fract *fractal);
 
 #endif

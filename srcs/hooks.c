@@ -14,14 +14,11 @@ int	zoom(int button, int x, int y,t_fract *fractal)
 {
 	(void) x;
 	(void) y;
-	printf("button|%d\n", button);
-	printf("x|%d\n", x);
-	printf("y|%d\n", y);
 
 	if (button == 4)
-		fractal->zoom *= 2;
+		fractal->zoom *= 1.2;
 	if (button == 5)
-		fractal->zoom /= 2;
+		fractal->zoom *= 0.8;
 	data_flow(fractal);
 
 //	mlx_loop_hook(fractal->mlx, render_jul, fractal);

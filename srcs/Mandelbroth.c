@@ -19,7 +19,7 @@ void mandelbrot(t_fract *fractal)
 			fractal->C = init_complex(fractal->x, fractal->y);
 			fractal->Z = init_complex(0, 0);
 			if (fast_check(fractal))
-				fractal->color = 0x00FFFFFF;
+				fractal->color = 0;
 			else
 			{
 				iter = 0;

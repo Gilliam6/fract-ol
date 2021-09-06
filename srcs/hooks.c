@@ -39,13 +39,14 @@ int arrows(int button, t_fract *fractal)
 	// 125 down
 
 	if (button == 18)
-		fractal->color_split += 1;
+		fractal->color_split += 10;
 	if (button == 19)
 		fractal->color_split = 1;
 	if (button == 15)
 	{
 		fractal->x_move = 0;
 		fractal->y_move = 0;
+		fractal->zoom = 1;
 	}
 	if (button == 123)
 		fractal->x_move -= 50 ;

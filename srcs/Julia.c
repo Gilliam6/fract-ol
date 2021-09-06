@@ -10,6 +10,7 @@ void julia(t_fract *fractal)
 	fractal->x_step = (double)MAX_X / 4.0 / fractal->zoom;
 	fractal->y_step = (double)MAX_Y / 4.0 / fractal->zoom;
 	x = -MAX_X / 2;
+
 	while(x < MAX_X / 2)
 	{
 		y = -MAX_Y / 2;
@@ -18,7 +19,7 @@ void julia(t_fract *fractal)
 			fractal->x = (x + fractal->x_move) / fractal->x_step;
 			fractal->y = (y + fractal->y_move) / fractal->y_step;
 			fractal->Z = init_complex(fractal->x, fractal->y);
-			iter = 0;
+
 			if (fast_check(fractal))
 				fractal->color = 0;
 			else

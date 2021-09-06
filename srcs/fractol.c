@@ -40,13 +40,7 @@ void	fractal(char *set)
 {
 	t_fract fractal;
 
-	fractal.set = set;
-	fractal.zoom = 1;
-	fractal.x_move = 0;
-	fractal.y_move = 0;
-	fractal.x_step = (double)(MAX_X / 4 / fractal.zoom);
-	fractal.y_step = (double)(MAX_Y / 4 / fractal.zoom);
-	fractal.color_split = 1;
+	fractal = init_fractal(set);
 
 	// mlx and window init
 	fractal.mlx = mlx_init();

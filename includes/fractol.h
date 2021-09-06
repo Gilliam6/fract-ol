@@ -9,7 +9,7 @@
 #  define MAX_Y 800
 # endif
 # ifndef MAX_ITER
-#  define MAX_ITER 50
+#  define MAX_ITER 100
 # endif
 # include <fcntl.h>
 # include <unistd.h>
@@ -73,5 +73,6 @@ int	zoom(int button, int x, int y,t_fract *fractal);
 int arrows(int button, t_fract *fractal);
 void burning_ship(t_fract *fractal);
 t_complex	bur_square(t_complex complex);
+t_fract	init_fractal(char *set);
 
 #endif

@@ -10,6 +10,16 @@ t_complex	square(t_complex complex)
 	return (complex);
 }
 
+t_complex	bur_square(t_complex complex)
+{
+	double temp;
+
+	temp = (complex.re * complex.re) - (complex.im * complex.im);
+	complex.im = fabs(2.0 * complex.re * complex.im);
+	complex.re = temp;
+	return (complex);
+}
+
 double	magnitude(t_complex complex)
 {
 	return ((complex.re * complex.re) + (complex.im * complex.im));
@@ -37,9 +47,4 @@ int fast_check(t_fract *fract)
 		return (1);
 	}
 	return (0);
-}
-
-double radius(t_complex complex)
-{
-	return ((1 + sqrt(1 + 4 * magnitude(complex))) / 2);
 }

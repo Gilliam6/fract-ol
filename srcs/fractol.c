@@ -10,12 +10,12 @@ int	my_exit(int err_num)
 
 int	name_check(char *f_name)
 {
-	char	fractals[2][15] = {"Mandelbrot", "Julia"};
+	char	fractals[3][15] = {"Mandelbrot", "Julia", "Burning Ship"};
 	int		set;
 	int		index;
 
 	set = 0;
-	while(set < 2)
+	while(set < 3)
 	{
 		index = 0;
 		while (f_name[index] && fractals[set][index] == f_name[index])
@@ -33,6 +33,8 @@ void	data_flow(t_fract *fractal)
 		mandelbrot(fractal);
 	if (name_check(fractal->set) == 1)
 		julia(fractal);
+	if (name_check(fractal->set) == 2)
+		burning_ship(fractal);
 }
 void	fractal(char *set)
 {
@@ -42,6 +44,10 @@ void	fractal(char *set)
 	fractal.zoom = 1;
 	fractal.x_move = 0;
 	fractal.y_move = 0;
+	fractal.x_step = (double)(MAX_X / 4 / fractal.zoom);
+	fractal.y_step = (double)(MAX_Y / 4 / fractal.zoom);
+	fractal.color_split = 1;
+
 	// mlx and window init
 	fractal.mlx = mlx_init();
 	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, set);

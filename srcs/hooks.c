@@ -17,15 +17,26 @@ int	zoom(int button, int x, int y,t_fract *fractal)
 
 	if (button == 4)
 	{
-		fractal->zoom *= 1.2;
+		fractal->max.re *= 1.2;
+		fractal->max.im *= 1.2;
+		fractal->min.re *= 1.2;
+		fractal->min.im *= 1.2;;
 	}
 	if (button == 5)
 	{
-		new_x = (x - MAX_X/ 2) * fractal->x_step;
-		new_y = (y - MAX_Y/ 2) * fractal->y_step;
-		fractal->zoom *= 0.8;
-		fractal->x_move += new_x / (fractal->x_step * 0.8);
-		fractal->y_move += new_y / (fractal->y_step * 0.8);
+		// находим центр новой области координат
+		new_x = fractal->min.re + x * fractal->x_step;
+		new_y = fractal->min.re + y * fractal->y_step;
+		// меняем наш степ на каждый пиксель
+		fractal->x_step *= 0.8;
+		fractal->y_step *= 0.8;
+		// высчитываем новые координаты
+		fractal->min.re = new_x - (MAX_X / 2) * fractal->x_step;
+		fractal->min.im = new_y - (MAX_Y / 2) * fractal->y_step;
+		fractal->max.re = fractal->min.re + MAX_X * fractal->x_step;
+		fractal->max.im = fractal->min.im + MAX_Y * fractal->y_step;
+//		fractal->x_move += new_x / (fractal->x_step * 0.8);
+//		fractal->y_move += new_y / (fractal->y_step * 0.8);
 	}
 	data_flow(fractal);
 	return (1);
@@ -44,18 +55,31 @@ int arrows(int button, t_fract *fractal)
 		fractal->color_split = 1;
 	if (button == 15)
 	{
-		fractal->x_move = 0;
-		fractal->y_move = 0;
-		fractal->zoom = 1;
+		fractal->min = init_complex(-2, -2);
+		fractal->max = init_complex(2, 2);
+		fractal->x_step = 0;
+		fractal->y_step = 0;
 	}
 	if (button == 123)
-		fractal->x_move -= 50 ;
+	{
+		fractal->min.re -= 50 * fractal->x_step;
+		fractal->max.re -= 50 * fractal->x_step;
+	}
 	if (button == 124)
-		fractal->x_move += 50 ;
+	{
+		fractal->min.re += 50 * fractal->x_step;
+		fractal->max.re += 50 * fractal->x_step;
+	}
 	if (button == 126)
-		fractal->y_move -= 50 ;
+	{
+		fractal->min.im -= 50 * fractal->y_step;
+		fractal->max.im -= 50 * fractal->y_step;
+	}
 	if (button == 125)
-		fractal->y_move += 50 ;
+	{
+		fractal->min.im += 50 * fractal->y_step;
+		fractal->max.im += 50 * fractal->y_step;
+	}
 	data_flow(fractal);
 	return (1);
 }

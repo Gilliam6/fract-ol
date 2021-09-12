@@ -44,13 +44,8 @@ typedef struct fract_list
 	t_complex 		min;
 	t_complex		click;
 	img_data		img;
-	double			R;
-	double			zoom;
-	int				iter;
 	int				color;
 	char			*set;
-	int				x_move;
-	int 			y_move;
 	double 			x_step;
 	double			y_step;
 	int				color_split;
@@ -74,5 +69,6 @@ int arrows(int button, t_fract *fractal);
 void burning_ship(t_fract *fractal);
 t_complex	bur_square(t_complex complex);
 t_fract	init_fractal(char *set);
+void	draw(t_fract *fractal);
 
 #endif

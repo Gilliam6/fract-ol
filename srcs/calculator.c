@@ -28,8 +28,8 @@ int	fast_check(t_fract *fract)
 	double	theta;
 	double	Pc;
 
-	P = sqrt((pow(fract->C.re - 0.25, 2) + pow(fract->C.im, 2)));
-	theta = atan2(fract->C.im, fract->C.re - 0.25);
+	P = sqrt((pow(fract->x - 0.25, 2) + pow(fract->y, 2)));
+	theta = atan2(fract->y, fract->x - 0.25);
 	Pc = 0.5 - 0.5 * cos(theta);
 	if (P <= Pc)
 		return (1);

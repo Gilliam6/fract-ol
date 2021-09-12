@@ -1,4 +1,13 @@
 #include "../includes/fractol.h"
+void	data_flow(t_fract *fractal)
+{
+	if (name_check(fractal->set) == 0)
+		mandelbrot(fractal);
+	if (name_check(fractal->set) == 1)
+		julia(fractal);
+	if (name_check(fractal->set) == 2)
+		burning_ship(fractal);
+}
 
 void	draw(t_fract *fractal)
 {

@@ -15,6 +15,8 @@ int	zoom(int button, int x, int y, t_fract *fractal)
 	double	new_x;
 	double	new_y;
 
+	fractal->click.re = -2.0 + 4.0 / MAX_X * x;
+	fractal->click.im = -2.0 + 4.0 / MAX_Y * y;
 	if (button == 4)
 	{
 		fractal->max.re *= 1.2;

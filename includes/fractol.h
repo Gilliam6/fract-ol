@@ -50,6 +50,7 @@ typedef struct fract_list
 	double			y_step;
 	int				color_split;
 } t_fract;
+int	name_check(char *f_name);
 void	data_flow(t_fract *fractal);
 int close_win(int key, t_fract *fractal);
 void mandelbrot(t_fract *fractal);

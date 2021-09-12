@@ -18,16 +18,6 @@ int	name_check(char *f_name)
 	return (-1);
 }
 
-void	data_flow(t_fract *fractal)
-{
-	if (name_check(fractal->set) == 0)
-		mandelbrot(fractal);
-	if (name_check(fractal->set) == 1)
-		julia(fractal);
-	if (name_check(fractal->set) == 2)
-		burning_ship(fractal);
-}
-
 void	fractal(char *set)
 {
 	t_fract	fractal;

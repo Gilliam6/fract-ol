@@ -24,7 +24,7 @@ int	colorize(int iter, t_fract *fractal)
 	t = 0;
 	r = 0 + (iter + fractal->color_split + 1) % 250;
 	g = 255 - (iter + fractal->color_split + 1) % 250;
-	b = 155 - (iter + fractal->color_split + 1) % 150);
+	b = 155 - (iter + fractal->color_split + 1) % 150;
 	if (iter == MAX_ITER)
 		return (0);
 	return (create_trgb(t, r, g, b));

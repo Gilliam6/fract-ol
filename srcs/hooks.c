@@ -26,7 +26,7 @@ int	zoom(int button, int x, int y,t_fract *fractal)
 	{
 		// находим центр новой области координат
 		new_x = fractal->min.re + x * fractal->x_step;
-		new_y = fractal->min.re + y * fractal->y_step;
+		new_y = fractal->min.im + y * fractal->y_step;
 		// меняем наш степ на каждый пиксель
 		fractal->x_step *= 0.8;
 		fractal->y_step *= 0.8;
@@ -34,7 +34,7 @@ int	zoom(int button, int x, int y,t_fract *fractal)
 		fractal->min.re = new_x - (MAX_X / 2) * fractal->x_step;
 		fractal->min.im = new_y - (MAX_Y / 2) * fractal->y_step;
 		fractal->max.re = fractal->min.re + MAX_X * fractal->x_step;
-		fractal->max.im = fractal->min.im + MAX_Y * fractal->y_step;
+		fractal->max.im = fractal->min.im - MAX_Y * fractal->y_step;
 //		fractal->x_move += new_x / (fractal->x_step * 0.8);
 //		fractal->y_move += new_y / (fractal->y_step * 0.8);
 	}

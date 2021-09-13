@@ -14,6 +14,7 @@ t_fract	init_fractal(char *set)
 	t_fract	fractal;
 
 	fractal.set = set;
+	fractal.MAX_ITER = 30;
 	fractal.min.re = -2;
 	fractal.min.im = -2;
 	fractal.max.re = 2;

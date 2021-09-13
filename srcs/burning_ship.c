@@ -11,7 +11,7 @@ void	burning_ship(t_fract *fractal)
 	else
 	{
 		iter = 0;
-		while (iter < MAX_ITER && magnitude(fractal->Z) < 4.0)
+		while (iter < fractal->MAX_ITER && magnitude(fractal->Z) < 4.0)
 		{
 			fractal->Z = square(fractal->Z);
 			fractal->Z.im = fabs(fractal->Z.im);

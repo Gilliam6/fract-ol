@@ -1,15 +1,12 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
-# include "../mlx/mlx.h"
+# include "/usr/local/include/mlx.h"
 # include "../includes/fractol.h"
 # ifndef MAX_X
 #  define MAX_X 800
 # endif
 # ifndef MAX_Y
 #  define MAX_Y 800
-# endif
-# ifndef MAX_ITER
-#  define MAX_ITER 100
 # endif
 # include <fcntl.h>
 # include <unistd.h>
@@ -38,6 +35,7 @@ typedef struct fract_list
 	void 			*win;
 	double			x;
 	double			y;
+	int				MAX_ITER;
 	t_complex		C;
 	t_complex 		Z;
 	t_complex 		max;
@@ -50,6 +48,7 @@ typedef struct fract_list
 	double			y_step;
 	int				color_split;
 } t_fract;
+
 int	name_check(char *f_name);
 void	data_flow(t_fract *fractal);
 int close_win(int key, t_fract *fractal);
@@ -71,5 +70,6 @@ void burning_ship(t_fract *fractal);
 t_complex	bur_square(t_complex complex);
 t_fract	init_fractal(char *set);
 void	draw(t_fract *fractal);
-
+int	julia_complex(int x, int y, t_fract *fractal);
+void utils_move(int button, t_fract *fractal);
 #endif

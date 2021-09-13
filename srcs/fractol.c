@@ -4,7 +4,11 @@ int	my_exit(int err_num)
 {
 	if (err_num == -1)
 		ft_putstr_fd("Invalid arguments\n", 1);
-	return (err_num);
+	if (err_num == -2)
+		ft_putstr_fd("Mlx init fail\n", 1);
+	if (err_num == -3)
+		ft_putstr_fd("New window init fail\n", 1);
+	exit (0);
 }
 
 int	name_check(char *f_name)
@@ -24,12 +28,17 @@ void	fractal(char *set)
 
 	fractal = init_fractal(set);
 	fractal.mlx = mlx_init();
+	if (!fractal.mlx)
+		my_exit(-2);
 	fractal.win = mlx_new_window(fractal.mlx, MAX_X, MAX_Y, set);
+	if (!fractal.win)
+		my_exit(-3);
 	fractal.img.img = mlx_new_image(fractal.mlx, MAX_X, MAX_Y);
 	fractal.img.addr = mlx_get_data_addr(fractal.img.img, &fractal
 			.img.bits_per_pixel, &fractal.img.line_length, &fractal.img.endian);
 	draw(&fractal);
 	mlx_hook(fractal.win, 2, 1l << 0, close_win, &fractal);
+	mlx_hook(fractal.win, 6, 1l << 6, julia_complex, &fractal);
 	mlx_mouse_hook(fractal.win, zoom, &fractal);
 	mlx_key_hook(fractal.win, arrows, &fractal);
 	mlx_loop(fractal.mlx);

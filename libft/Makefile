@@ -66,10 +66,10 @@ $(NAME):	${OBJECTS}
 all:		${NAME}
 
 clean:
-			${RM} ${OBJECTS} ${BONUS_O}
+			@${RM} ${OBJECTS} ${BONUS_O}
 
 fclean:		clean
-			${RM} ${NAME}
+			@${RM} ${NAME}
 
 re:			fclean all
 

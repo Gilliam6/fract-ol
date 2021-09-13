@@ -7,7 +7,7 @@ void	julia(t_fract *fractal)
 	fractal->C = init_complex(fractal->click.re, fractal->click.im);
 	fractal->Z = init_complex(fractal->x, fractal->y);
 	iter = 0;
-	while (iter < MAX_ITER && magnitude(fractal->Z) < 4.0)
+	while (iter < fractal->MAX_ITER && magnitude(fractal->Z) < 4.0)
 	{
 		fractal->Z = square(fractal->Z);
 		fractal->Z = add(fractal->Z, fractal->C);

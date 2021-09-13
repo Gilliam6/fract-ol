@@ -12,8 +12,11 @@ int	close_win(int key, t_fract *fractal)
 
 int	julia_complex(int x, int y, t_fract *fractal)
 {
-	fractal->click.re = -2 + x * (4.0 / MAX_X);
-	fractal->click.im = -2 + y * (4.0 / MAX_Y);
+	if (fractal->jul_flag)
+	{
+		fractal->click.re = -2 + x * (4.0 / MAX_X);
+		fractal->click.im = -2 + y * (4.0 / MAX_Y);
+	}
 	draw(fractal);
 	return (1);
 }
@@ -51,6 +54,8 @@ int	arrows(int button, t_fract *fractal)
 {
 	if (button == 18)
 		fractal->color_split += 10;
+	if (button == 19)
+		fractal->jul_flag = !fractal->jul_flag;
 	if (button >= 123 && button <= 126)
 		utils_move(button, fractal);
 	if (button == 24)

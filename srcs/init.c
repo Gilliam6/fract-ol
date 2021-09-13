@@ -23,5 +23,6 @@ t_fract	init_fractal(char *set)
 	fractal.y_step = fabs(fractal.max.im - fractal.min.im) / MAX_Y;
 	fractal.color_split = 1;
 	fractal.click = init_complex(0.12, -0.3);
+	fractal.jul_flag = 0;
 	return (fractal);
 }

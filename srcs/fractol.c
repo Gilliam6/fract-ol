@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/15 21:07:49 by rstephan          #+#    #+#             */
+/*   Updated: 2021/09/15 21:07:50 by rstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 int	my_exit(int err_num)
@@ -37,10 +49,9 @@ void	fractal(char *set)
 	fractal.img.addr = mlx_get_data_addr(fractal.img.img, &fractal
 			.img.bits_per_pixel, &fractal.img.line_length, &fractal.img.endian);
 	draw(&fractal);
-	mlx_hook(fractal.win, 2, 1l << 0, close_win, &fractal);
 	mlx_hook(fractal.win, 6, 1l << 6, julia_complex, &fractal);
 	mlx_mouse_hook(fractal.win, zoom, &fractal);
-	mlx_key_hook(fractal.win, arrows, &fractal);
+	mlx_hook(fractal.win, 2, 1L << 0, arrows, &fractal);
 	mlx_loop(fractal.mlx);
 }
 

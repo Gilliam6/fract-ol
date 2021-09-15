@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/15 20:37:35 by rstephan          #+#    #+#             */
+/*   Updated: 2021/09/15 20:37:38 by rstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FRACTOL_H
 # define FRACTOL_H
 # include "/usr/local/include/mlx.h"
@@ -43,16 +55,16 @@ typedef struct fract_list
 	t_complex		click;
 	t_img_data		img;
 	int				color;
-	char			*set;
+	char			set;
 	double			x_step;
 	double			y_step;
 	int				color_split;
 	int				jul_flag;
+	double			bright;
 }				t_fract;
 
 int			name_check(char *f_name);
 void		data_flow(t_fract *fractal);
-int			close_win(int key, t_fract *fractal);
 void		mandelbrot(t_fract *fractal);
 void		julia(t_fract *fractal);
 t_complex	init_complex(double re, double im);
@@ -61,9 +73,9 @@ t_complex	add(t_complex z, t_complex c);
 t_complex	square(t_complex complex);
 void		my_mlx_pixel_put(t_fract *fract, int x, int y, int color);
 int			create_trgb(int t, int r, int g, int b);
-int			colorize(int iter, t_fract *fractal);
+int			colorize(double iter, int max_iter, int color_split, double bright);
 t_complex	init_complex(double re, double im);
-int			fast_check(t_fract *fract);
+int			fast_check(double x, double y);
 double		radius(t_complex complex);
 int			zoom(int button, int x, int y, t_fract *fractal);
 int			arrows(int button, t_fract *fractal);
@@ -73,4 +85,6 @@ t_fract		init_fractal(char *set);
 void		draw(t_fract *fractal);
 int			julia_complex(int x, int y, t_fract *fractal);
 void		utils_move(int button, t_fract *fractal);
+int			zoom(int button, int x, int y, t_fract *fractal);
+void		zoom_in_out(t_fract *fractal, int x, int y, double zoom);
 #endif

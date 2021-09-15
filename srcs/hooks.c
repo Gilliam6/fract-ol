@@ -1,13 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/15 21:08:01 by rstephan          #+#    #+#             */
+/*   Updated: 2021/09/15 21:08:03 by rstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
-int	close_win(int key, t_fract *fractal)
+int	close_win(t_fract *fractal)
 {
-	if (key == 53)
-	{
-		mlx_destroy_window(fractal->mlx, fractal->win);
-		exit(0);
-	}
-	return (1);
+	mlx_destroy_window(fractal->mlx, fractal->win);
+	exit(0);
 }
 
 int	julia_complex(int x, int y, t_fract *fractal)
@@ -21,39 +29,39 @@ int	julia_complex(int x, int y, t_fract *fractal)
 	return (1);
 }
 
-int	zoom(int button, int x, int y, t_fract *fractal)
+void	change_bright(int button, t_fract *fractal)
+{
+	if (button == 9)
+		if (fractal->bright < 1)
+			fractal->bright += 0.01;
+	if (button == 8)
+		if (fractal->bright > 0)
+			fractal->bright -= 0.01;
+}
+
+void	zoom_in_out(t_fract *fractal, int x, int y, double zoom)
 {
 	double	new_x;
 	double	new_y;
 
-	if (button == 4)
-	{
-		fractal->max.re *= 1.2;
-		fractal->max.im *= 1.2;
-		fractal->min.re *= 1.2;
-		fractal->min.im *= 1.2;
-		fractal->x_step *= 1.2;
-		fractal->y_step *= 1.2;
-	}
-	if (button == 5)
-	{
-		new_x = fractal->min.re + x * fractal->x_step;
-		new_y = fractal->min.im + y * fractal->y_step;
-		fractal->x_step *= 0.8;
-		fractal->y_step *= 0.8;
-		fractal->min.re = new_x - (MAX_X / 2) * fractal->x_step;
-		fractal->min.im = new_y - (MAX_Y / 2) * fractal->y_step;
-		fractal->max.re = fractal->min.re + MAX_X * fractal->x_step;
-		fractal->max.im = fractal->min.im - MAX_Y * fractal->y_step;
-	}
-	draw(fractal);
-	return (1);
+	new_x = fractal->min.re + x * fractal->x_step;
+	new_y = fractal->min.im + y * fractal->y_step;
+	fractal->x_step *= zoom;
+	fractal->y_step *= zoom;
+	fractal->min.re = new_x + ((fractal->min.re - new_x) * zoom);
+	fractal->min.im = new_y + ((fractal->min.im - new_y) * zoom);
+	fractal->max.re = new_x + ((fractal->max.re - new_x) * zoom);
+	fractal->max.im = new_y + ((fractal->max.im - new_y) * zoom);
 }
 
 int	arrows(int button, t_fract *fractal)
 {
+	if (button == 9 || button == 8)
+		change_bright(button, fractal);
+	if (button == 53)
+		close_win(fractal);
 	if (button == 18)
-		fractal->color_split += 10;
+		fractal->color_split = (fractal->color_split + 1) % 3;
 	if (button == 19)
 		fractal->jul_flag = !fractal->jul_flag;
 	if (button >= 123 && button <= 126)

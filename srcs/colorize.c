@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colorize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/15 21:07:27 by rstephan          #+#    #+#             */
+/*   Updated: 2021/09/15 21:07:29 by rstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 void	my_mlx_pixel_put(t_fract *fract, int x, int y, int color)
@@ -9,23 +21,19 @@ void	my_mlx_pixel_put(t_fract *fract, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	create_trgb(int t, int r, int g, int b)
+int	colorize(double iter, int max_iter, int color_split, double bright)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
-}
+	double	t;
+	int		color;
 
-int	colorize(int iter, t_fract *fractal)
-{
-	int	t;
-	int	r;
-	int	g;
-	int	b;
-
-	t = 0;
-	r = 0 + (iter + fractal->color_split + 1) % 250;
-	g = 255 - (iter + fractal->color_split + 1) % 250;
-	b = 155 - (iter + fractal->color_split + 1) % 150;
-	if (iter == fractal->MAX_ITER)
+	if (iter == max_iter)
 		return (0);
-	return (create_trgb(t, r, g, b));
+	t = iter / max_iter;
+	t += (1 - t) * bright;
+	color = (t / ((color_split + 1) % 3 + 1) * 255);
+	color <<= 8;
+	color += (t / ((color_split + 2) % 3 + 1) * 255);
+	color <<= 8;
+	color += (t / ((color_split + 3) % 3 + 1) * 255);
+	return (color);
 }

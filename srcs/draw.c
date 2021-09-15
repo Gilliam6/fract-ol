@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rstephan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/15 21:07:37 by rstephan          #+#    #+#             */
+/*   Updated: 2021/09/15 21:07:38 by rstephan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 void	data_flow(t_fract *fractal)
 {
-	if (name_check(fractal->set) == 0)
+	if (fractal->set == 0)
 		mandelbrot(fractal);
-	if (name_check(fractal->set) == 1)
+	else if (fractal->set == 1)
 		julia(fractal);
-	if (name_check(fractal->set) == 2)
+	else
 		burning_ship(fractal);
 }
 
